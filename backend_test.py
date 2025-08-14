@@ -192,10 +192,10 @@ class LobbySystemTester:
     def test_socket_io_integration(self):
         """Test Socket.IO server integration for lobby handlers"""
         try:
-            # Check if Socket.IO server is accessible
-            response = requests.get(f"{BASE_URL}/socket.io/", timeout=5)
+            # Test Socket.IO with proper parameters
+            response = requests.get(f"{BASE_URL}/socket.io/?EIO=4&transport=polling", timeout=5)
             
-            if response.status_code == 200:
+            if response.status_code == 200 and 'sid' in response.text:
                 # Check server.js for lobby integration
                 server_path = "/app/server.js"
                 if os.path.exists(server_path):
@@ -205,7 +205,8 @@ class LobbySystemTester:
                     # Look for game server initialization
                     if 'gameServer.initialize' in server_content:
                         return self.log_test("Socket.IO Integration", True, 
-                            "Socket.IO server accessible and game server initialized")
+                            "Socket.IO server accessible and game server initialized",
+                            f"Socket.IO response contains session ID")
                     else:
                         return self.log_test("Socket.IO Integration", False, 
                             "Socket.IO accessible but game server not properly initialized")
@@ -214,10 +215,89 @@ class LobbySystemTester:
                         "Socket.IO accessible but server.js not found")
             else:
                 return self.log_test("Socket.IO Integration", False, 
-                    f"Socket.IO server not accessible: {response.status_code}")
+                    f"Socket.IO server not responding correctly: {response.status_code}")
                     
         except Exception as e:
             return self.log_test("Socket.IO Integration", False, f"Error testing Socket.IO: {str(e)}")
+
+    def test_lobby_manager_functionality(self):
+        """Test LobbyManager embedded functionality"""
+        try:
+            lobby_manager_path = "/app/lib/lobby/LobbyManager.js"
+            if os.path.exists(lobby_manager_path):
+                with open(lobby_manager_path, 'r') as f:
+                    content = f.read()
+                
+                # Check if match allocation is embedded in LobbyManager
+                embedded_features = []
+                missing_features = []
+                
+                features_to_check = [
+                    ('allocateMatch', 'Match allocation functionality'),
+                    ('generateLobbyId', 'Lobby ID generation'),
+                    ('generateJoinCode', 'Join code generation'),
+                    ('MongoClient', 'Database integration'),
+                    ('crypto.randomUUID', 'UUID generation'),
+                    ('this.lobbies = new Map', 'In-memory lobby cache'),
+                    ('this.userSessions = new Map', 'User session tracking')
+                ]
+                
+                for feature, description in features_to_check:
+                    if feature in content:
+                        embedded_features.append(description)
+                    else:
+                        missing_features.append(description)
+                
+                if len(embedded_features) >= 5:  # Most features present
+                    return self.log_test("LobbyManager Functionality", True, 
+                        f"LobbyManager has most required functionality embedded",
+                        f"Found: {', '.join(embedded_features)}")
+                else:
+                    return self.log_test("LobbyManager Functionality", False, 
+                        f"LobbyManager missing key functionality",
+                        f"Missing: {', '.join(missing_features)}")
+            else:
+                return self.log_test("LobbyManager Functionality", False, 
+                    "LobbyManager.js file not found")
+                    
+        except Exception as e:
+            return self.log_test("LobbyManager Functionality", False, f"Error testing functionality: {str(e)}")
+
+    def test_missing_socket_handlers(self):
+        """Test what specific socket handlers are missing"""
+        try:
+            # Check if lobby socket handlers are needed or embedded elsewhere
+            gameserver_path = "/app/lib/gameServer.js"
+            server_path = "/app/server.js"
+            
+            socket_integration_found = False
+            lobby_handlers_needed = []
+            
+            # Check if gameServer has socket handling
+            if os.path.exists(gameserver_path):
+                with open(gameserver_path, 'r') as f:
+                    gameserver_content = f.read()
+                
+                if 'socket.on(' in gameserver_content or 'io.on(' in gameserver_content:
+                    socket_integration_found = True
+            
+            # Check what lobby-specific handlers are missing
+            required_handlers = [
+                'lobby:create', 'lobby:join', 'lobby:leave', 
+                'lobby:ready', 'lobby:chat', 'lobby:kick', 'lobby:start'
+            ]
+            
+            # Since LobbySocketHandlers.js is missing, these handlers need to be implemented
+            if not socket_integration_found:
+                return self.log_test("Missing Socket Handlers", False, 
+                    "Lobby socket handlers not implemented",
+                    f"Need to implement: {', '.join(required_handlers)}")
+            else:
+                return self.log_test("Missing Socket Handlers", True, 
+                    "Socket handling infrastructure exists, lobby handlers can be added")
+                    
+        except Exception as e:
+            return self.log_test("Missing Socket Handlers", False, f"Error checking handlers: {str(e)}")
 
     def test_lobby_api_endpoints(self):
         """Test if lobby-related API endpoints exist"""
