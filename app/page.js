@@ -565,82 +565,25 @@ export default function Home() {
 
   const handleLoginClick = async () => {
     console.log('🔑 Login button clicked')
-    console.log('🔍 State:', { ready, authenticated, privyTimeout, user: !!user })
-    
-    // If Privy timed out or failed to initialize, use bypass authentication immediately
-    if (privyTimeout || !ready) {
-      console.log('🔄 Using bypass authentication - Privy not ready or timed out')
-      
-      // Create a working user session
-      const bypassUser = {
-        id: 'user_' + Date.now(),
-        email: { address: `player${Date.now()}@turfloot.com` },
-        wallet: { address: '0x742d35Cc6ab4925a1A5b73b6F89c4A3B4A2f2A9d' },
-        privyId: 'bypass_' + Date.now(),
-        createdAt: new Date().toISOString(),
-        bypassMode: true
-      }
-      
-      // Set user profile and load data
-      setUserProfile(bypassUser)
-      setDisplayName(`Player${Date.now().toString().slice(-4)}`)
-      loadUserProfile(bypassUser.id)
-      
-      // Create auth token for the game
-      try {
-        const response = await fetch('/api/auth/privy', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            privy_user: bypassUser
-          })
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          if (data.token) {
-            localStorage.setItem('auth_token', data.token)
-            console.log('✅ Bypass auth token created successfully')
-          }
-        }
-      } catch (error) {
-        console.log('⚠️ Could not create auth token, but user session is active')
-      }
-      
-      console.log('✅ Bypass authentication successful')
-      return
-    }
+    console.log('🔍 Privy state:', { ready, authenticated, user: !!user })
     
     if (authenticated) {
       console.log('✅ User already authenticated')
       return
     }
     
+    if (!ready) {
+      console.log('⏳ Privy is still initializing, please wait...')
+      return
+    }
+    
     try {
-      console.log('🚀 Triggering Privy login')
+      console.log('🚀 Opening Privy authentication popup')
       await login()
-      console.log('✅ Login initiated successfully')
+      console.log('✅ Privy authentication initiated successfully')
     } catch (error) {
-      console.error('❌ Login error:', error)
-      console.log('🔄 Privy failed, falling back to bypass authentication')
-      
-      // Fallback to bypass authentication
-      const bypassUser = {
-        id: 'user_' + Date.now(),
-        email: { address: `player${Date.now()}@turfloot.com` },
-        wallet: { address: '0x742d35Cc6ab4925a1A5b73b6F89c4A3B4A2f2A9d' },
-        privyId: 'bypass_' + Date.now(),
-        createdAt: new Date().toISOString(),
-        bypassMode: true
-      }
-      
-      setUserProfile(bypassUser)
-      setDisplayName(`Player${Date.now().toString().slice(-4)}`)
-      loadUserProfile(bypassUser.id)
-      
-      console.log('✅ Bypass authentication successful after Privy failure')
+      console.error('❌ Privy authentication failed:', error)
+      alert('Authentication failed. Please try again.')
     }
   }
 
