@@ -12,8 +12,8 @@ import os
 import uuid
 from datetime import datetime
 
-# Test configuration
-BASE_URL = os.getenv('NEXT_PUBLIC_BASE_URL', 'https://turfloot-arena-1.preview.emergentagent.com')
+# Test configuration - Use localhost since external URL has 502 errors
+BASE_URL = "http://localhost:3000"
 API_BASE = f"{BASE_URL}/api"
 
 class LobbySystemTester:
