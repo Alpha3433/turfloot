@@ -41,6 +41,31 @@ app.prepare().then(async () => {
     console.log('⚠️ Game server not available:', error.message)
   }
 
+  // Initialize Lobby Socket Handlers
+  try {
+    const { initializeLobbyHandlers } = await import('./lib/lobby/socketHandlers.js')
+    const { Server } = require('socket.io')
+    
+    // Create Socket.IO instance if not already created by game server
+    let io
+    if (server.io) {
+      io = server.io
+    } else {
+      io = new Server(server, {
+        cors: {
+          origin: "*",
+          methods: ["GET", "POST"]
+        }
+      })
+      server.io = io
+    }
+    
+    initializeLobbyHandlers(io)
+    console.log('🎮 Lobby system initialized with Socket.IO')
+  } catch (error) {
+    console.log('⚠️ Lobby system not available:', error.message)
+  }
+
   // Keep legacy WebSocket support for backwards compatibility
   try {
     const { initializeWebSocket } = require('./lib/websocket.js')
