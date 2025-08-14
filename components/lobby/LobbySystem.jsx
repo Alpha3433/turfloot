@@ -21,13 +21,21 @@ const LobbySystem = () => {
   // Initialize Socket.IO connection
   useEffect(() => {
     if (authenticated && user && !socket) {
-      const newSocket = io('http://localhost:3000', {
-        transports: ['websocket', 'polling']
+      // Use the current window location for socket connection
+      const socketUrl = window.location.origin
+      console.log('🔌 Connecting to socket server:', socketUrl)
+      
+      const newSocket = io(socketUrl, {
+        transports: ['websocket', 'polling'],
+        autoConnect: true,
+        reconnection: true,
+        timeout: 5000
       })
 
       newSocket.on('connect', () => {
         console.log('🔌 Connected to lobby server')
         setIsConnected(true)
+        setError(null)
         
         // Authenticate socket
         const token = localStorage.getItem('auth_token') || localStorage.getItem('privy:token')
@@ -36,9 +44,18 @@ const LobbySystem = () => {
         }
       })
 
-      newSocket.on('disconnect', () => {
-        console.log('🔌 Disconnected from lobby server')
+      newSocket.on('connect_error', (error) => {
+        console.error('🔌 Socket connection error:', error)
         setIsConnected(false)
+        setError('Connection failed')
+      })
+
+      newSocket.on('disconnect', (reason) => {
+        console.log('🔌 Disconnected from lobby server:', reason)
+        setIsConnected(false)
+        if (reason !== 'io client disconnect') {
+          setError('Connection lost')
+        }
       })
 
       newSocket.on('authenticated', (data) => {
