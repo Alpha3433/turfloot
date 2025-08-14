@@ -197,7 +197,7 @@ const LobbySystem = () => {
 
   if (!authenticated) {
     return (
-      <div className="fixed top-1/3 right-6 z-40">
+      <div className="fixed top-20 right-6 z-40">
         <div className="bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 border border-gray-600/50 min-w-[280px]">
           <div className="flex items-center space-x-2 mb-3">
             <Users className="w-4 h-4 text-purple-400" />
@@ -218,7 +218,7 @@ const LobbySystem = () => {
   }
 
   return (
-    <div className="fixed top-1/3 right-6 z-40">
+    <div className="fixed top-20 right-6 z-40">
       {/* Error Display */}
       {error && (
         <div className="mb-4 p-3 bg-red-900 border border-red-600 rounded-lg text-red-200 text-sm">
