@@ -541,27 +541,7 @@ export default function Home() {
     }
   }
 
-  // Enhanced Privy state with timeout detection
-  const [privyTimeout, setPrivyTimeout] = useState(false)
-  
-  // Monitor Privy initialization with timeout
-  useEffect(() => {
-    // Set a timeout to detect if Privy fails to initialize
-    const timeout = setTimeout(() => {
-      if (!ready) {
-        console.warn('⚠️ Privy failed to initialize within 3 seconds - activating bypass mode')
-        setPrivyTimeout(true)
-      }
-    }, 3000) // 3 second timeout (reduced from 10 seconds)
-    
-    // Clear timeout if Privy becomes ready
-    if (ready) {
-      clearTimeout(timeout)
-      setPrivyTimeout(false)
-    }
-    
-    return () => clearTimeout(timeout)
-  }, [ready])
+  // Enhanced Privy state - removed timeout logic since we have valid credentials
 
   const handleLoginClick = async () => {
     console.log('🔑 Login button clicked')
