@@ -413,7 +413,9 @@ class LobbySystemTester:
         test_methods = [
             self.create_test_user,
             self.test_lobby_manager_import,
+            self.test_lobby_manager_functionality,
             self.test_missing_components,
+            self.test_missing_socket_handlers,
             self.test_database_schema,
             self.test_play_page_lobby_integration,
             self.test_socket_io_integration,
