@@ -549,10 +549,10 @@ export default function Home() {
     // Set a timeout to detect if Privy fails to initialize
     const timeout = setTimeout(() => {
       if (!ready) {
-        console.warn('⚠️ Privy failed to initialize within 10 seconds - activating bypass mode')
+        console.warn('⚠️ Privy failed to initialize within 3 seconds - activating bypass mode')
         setPrivyTimeout(true)
       }
-    }, 10000) // 10 second timeout
+    }, 3000) // 3 second timeout (reduced from 10 seconds)
     
     // Clear timeout if Privy becomes ready
     if (ready) {
