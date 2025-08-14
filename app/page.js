@@ -1176,10 +1176,17 @@ export default function Home() {
             ) : (
               <button 
                 onClick={handleLoginClick}
-                className="px-6 py-2.5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-black rounded-lg font-bold transition-all hover:scale-105 shadow-lg text-sm"
-                title="Click to login with bypass authentication"
+                disabled={!ready}
+                className="px-6 py-2.5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-black rounded-lg font-bold transition-all hover:scale-105 shadow-lg disabled:opacity-50 text-sm disabled:cursor-not-allowed"
+                title={
+                  !ready ? 'Initializing authentication...' : 
+                  authenticated || userProfile ? 'Already logged in' : 
+                  'Click to login with Privy'
+                }
               >
-                LOGIN
+                {!ready ? 'Loading...' : 
+                 authenticated || userProfile ? 'Authenticated' : 
+                 'LOGIN'}
               </button>
             )}
           </div>
