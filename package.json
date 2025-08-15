@@ -16,9 +16,7 @@
     },
     "packageExtensions": {
         "@reown/appkit-siwx@*": {
-            "peerDependencies": {
-                "lit": "3.3.0"
-            }
+            "peerDependencies": {}
         },
         "@solana/wallet-adapter-particle@*": {
             "peerDependencies": {
