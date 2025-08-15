@@ -12,7 +12,7 @@
         "react-native": "0.74.7",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "bs58": "^4.0.1"
+        "bs58": "^6.0.0"
     },
     "overrides": {
         "@solana/web3.js": "^1.95.2",
