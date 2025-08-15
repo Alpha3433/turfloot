@@ -47,13 +47,11 @@
         "bs58": "^6.0.0"
     },
     "scripts": {
-        "dev": "NODE_OPTIONS='--max-old-space-size=2048' next dev --hostname 0.0.0.0 --port 3000",
-        "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
-        "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
-        "prebuild": "echo 'Container-safe build strategy'",
-        "build": "echo 'Using static deployment for container' && mkdir -p .next && echo '{}' > .next/BUILD_ID && cp static.html public/index.html",
-        "start": "next start -p 3000",
-        "postinstall": "echo 'Dependencies installed successfully'"
+        "dev": "next dev",
+        "prebuild": "echo '🔍 Container build diagnostics' && node -v && yarn -v && node -e \"const p=require('./package.json');console.log('private=',p.private,'workspaces=',!!p.workspaces)\"",
+        "build": "NODE_OPTIONS='--max-old-space-size=2048' next build",
+        "start": "next start",
+        "lint": "next lint"
     },
     "dependencies": {
         "@babel/runtime": "^7.24.0",
