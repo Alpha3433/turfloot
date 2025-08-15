@@ -12,7 +12,8 @@
         "react-native": "0.74.7",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "bs58": "^6.0.0"
+        "bs58": "^6.0.0",
+        "@solana/wallet-adapter-keystone": "npm:@solana/wallet-adapter-base@^0.9.23"
     },
     "packageExtensions": {
         "@solana/wallet-adapter-particle@*": {
