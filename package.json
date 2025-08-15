@@ -4,6 +4,9 @@
     "private": true,
     "workspaces": false,
     "engines": {
+        "node": "20.x",
+        "yarn": "1.22.22"
+    },
         "node": "20.x"
     },
     "resolutions": {
