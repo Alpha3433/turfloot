@@ -82,8 +82,7 @@
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "bs58": "^6.0.0",
-        "lit": "3.3.0",
-        "critters": "^0.0.24"
+        "lit": "3.3.0"
     },
     "scripts": {
         "dev": "NODE_OPTIONS='--max-old-space-size=2048' next dev --hostname 0.0.0.0 --port 3000",
