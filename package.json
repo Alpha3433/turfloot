@@ -7,7 +7,6 @@
         "node": "20.x",
         "yarn": "1.22.22"
     },
-    },
     "resolutions": {
         "rpc-websockets": "^8.0.0",
         "ws": "^8.18.0",
