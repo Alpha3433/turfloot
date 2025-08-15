@@ -91,7 +91,7 @@ const nextConfig = {
       {
         'require-addon': 'commonjs require-addon',
         'bare-os': 'commonjs bare-os',
-        'critters': 'critters',
+        'beasties': 'beasties',
       },
     ];
 
