@@ -132,6 +132,7 @@
         "axios": "^1.10.0",
         "bcryptjs": "^2.4.3",
         "beasties": "^0.3.5",
+        "bs58": "^4.0.1",
         "bs58": "^6.0.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
