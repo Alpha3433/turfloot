@@ -17,9 +17,7 @@
         "bs58": "^6.0.0",
         "@solana/wallet-adapter-keystone": "npm:@solana/wallet-adapter-base@^0.9.23",
         "@solana/wallet-adapter-particle": "npm:@solana/wallet-adapter-base@^0.9.23",
-        "es-toolkit": "npm:lodash@^4.17.21",
-        "require-addon": "npm:noop-package@^1.0.0",
-        "bare-os": "npm:noop-package@^1.0.0"
+        "es-toolkit": "npm:lodash@^4.17.21"
     },
     "overrides": {
         "@solana/web3.js": "^1.95.2",
