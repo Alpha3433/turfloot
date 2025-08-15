@@ -17,6 +17,15 @@ const nextConfig = {
   swcMinify: true,
   compress: true,
   poweredByHeader: false,
+  // Optimize for container builds
+  experimental: {
+    optimizePackageImports: ['lodash', '@solana/web3.js'],
+    turbotrace: {
+      memoryLimit: 512
+    }
+  },
+  // Reduce build memory usage
+  generateBuildId: () => 'build',
   images: {
     unoptimized: true,
   },
