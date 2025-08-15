@@ -17,20 +17,25 @@ const nextConfig = {
   swcMinify: true,
   compress: true,
   poweredByHeader: false,
-  // Optimize for container builds
+  // Optimize for container builds - prevent hanging
   experimental: {
     optimizePackageImports: ['lodash', '@solana/web3.js'],
     turbotrace: {
-      memoryLimit: 512
+      memoryLimit: 256
     }
   },
-  // Reduce build memory usage
+  // Reduce build memory usage and prevent hangs
   generateBuildId: () => 'build',
+  // Disable static generation that might be causing hangs
+  trailingSlash: false,
+  generateEtags: false,
   // Environment variables for build time
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY || 'default',
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV || 'production',
   },
+  // Disable problematic optimizations
+  optimizeFonts: false,
   images: {
     unoptimized: true,
   },
