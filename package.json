@@ -16,33 +16,14 @@
         "@solana/wallet-adapter-keystone": "npm:@solana/wallet-adapter-base@^0.9.23"
     },
     "packageExtensions": {
-        "@solana/wallet-adapter-particle@*": {
+        "@particle-network/solana-wallet@*": {
             "peerDependencies": {
                 "bs58": "^6.0.0"
             }
         },
-        "@keystonehq/sol-keyring@*": {
+        "@solana/wallet-adapter-particle@*": {
             "peerDependencies": {
-                "react": "18.2.0",
-                "react-dom": "18.2.0"
-            }
-        },
-        "@keystonehq/sdk@*": {
-            "peerDependencies": {
-                "react": "18.2.0", 
-                "react-dom": "18.2.0"
-            }
-        },
-        "qrcode.react@*": {
-            "peerDependencies": {
-                "react": "18.2.0",
-                "react-dom": "18.2.0"
-            }
-        },
-        "react-qr-reader@*": {
-            "peerDependencies": {
-                "react": "18.2.0",
-                "react-dom": "18.2.0"
+                "bs58": "^6.0.0"
             }
         }
     },
