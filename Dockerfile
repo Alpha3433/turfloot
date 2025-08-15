@@ -4,17 +4,12 @@ FROM node:20-alpine
 # Ensure native deps work smoothly
 RUN apk add --no-cache python3 make g++ git
 
-# Use the same Yarn version everywhere
-RUN corepack enable && corepack prepare yarn@4.3.1 --activate
-
 WORKDIR /app
 
-# Copy lock and yarn config early for caching
-COPY package.json yarn.lock .yarnrc.yml ./
-# If using Yarn Berry repo metadata:
-COPY .yarn .yarn
+# Copy package files early for caching
+COPY package.json yarn.lock ./
 
-# Deterministic install
+# Deterministic install with Yarn v1
 RUN yarn install --frozen-lockfile
 
 # Copy the rest
