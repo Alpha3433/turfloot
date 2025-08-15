@@ -26,6 +26,11 @@ const nextConfig = {
   },
   // Reduce build memory usage
   generateBuildId: () => 'build',
+  // Environment variables for build time
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY || 'default',
+    NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV || 'production',
+  },
   images: {
     unoptimized: true,
   },
