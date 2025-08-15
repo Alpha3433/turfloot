@@ -7,12 +7,15 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
 
 export const metadata = {
-  title: 'TurfLoot – Real-time blockchain skill gaming',
-  description: 'Compete in skill-based territory battles. Earn real SOL rewards. 100% skill, 0% luck.',
+  title: 'TurfLoot - Competitive Web3 Gaming',
+  description: 'Real-time multiplayer gaming with blockchain rewards',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://turfloot.com'),
   openGraph: {
-    title: 'TurfLoot – Real-time blockchain skill gaming',
-    description: 'Compete in skill-based territory battles. Earn real SOL rewards.',
-    images: ['/og-image.png'],
+    title: 'TurfLoot - Competitive Web3 Gaming',
+    description: 'Real-time multiplayer gaming with blockchain rewards',
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://turfloot.com',
+    siteName: 'TurfLoot',
+    type: 'website',
   },
 }
 
