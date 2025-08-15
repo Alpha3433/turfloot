@@ -14,28 +14,24 @@ if (fs.existsSync(envPath)) {
 
 const nextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
-  swcMinify: true,
-  compress: true,
+  swcMinify: false, // Disable to reduce memory usage
+  compress: false, // Disable to reduce memory usage  
   poweredByHeader: false,
-  // Optimize for container builds - prevent hanging
+  // Ultra-minimal for container builds
   experimental: {
-    optimizePackageImports: ['lodash', '@solana/web3.js'],
     turbotrace: {
-      memoryLimit: 256
+      memoryLimit: 128
     }
   },
-  // Reduce build memory usage and prevent hangs
+  // Minimal build settings
   generateBuildId: () => 'build',
-  // Disable static generation that might be causing hangs
   trailingSlash: false,
   generateEtags: false,
+  optimizeFonts: false,
   // Environment variables for build time
   env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY || 'default',
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV || 'production',
   },
-  // Disable problematic optimizations
-  optimizeFonts: false,
   images: {
     unoptimized: true,
   },
