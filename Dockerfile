@@ -2,7 +2,7 @@
 FROM node:20-alpine
 
 # Ensure native deps work smoothly
-RUN apk add --no-cache python3 make g++ git
+RUN apk add --no-cache python3 make g++ git libc6-compat vips-dev fftw-dev
 
 WORKDIR /app
 
