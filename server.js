@@ -1,5 +1,7 @@
 // Load environment variables first
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
+// Disable Next.js telemetry and version checks to allow offline environments
+process.env.NEXT_TELEMETRY_DISABLED = '1'
 
 // Log environment loading
 console.log('🔍 Environment variables loaded:')
